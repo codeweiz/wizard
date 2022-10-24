@@ -11,5 +11,10 @@ export default {
         "register": "注册",
         "username": "用户名",
         "password": "密码"
+    },
+    // 登陆模块校验
+    "loginValidate": {
+        "usernameCannotBeBlank": "用户名不能为空",
+        "passwordCannotBeBlank": "密码不能为空"
     }
 }

@@ -5,11 +5,16 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import {Vue} from 'vue-class-component';
+import {readSessionString} from "@/common/storage";
 
-@Options({
-  components: {
-  },
-})
-export default class Home extends Vue {}
+export default class Home extends Vue {
+
+  created() {
+    if (!readSessionString("userInfo")) {
+      debugger
+      this.$router.push('/login');
+    }
+  }
+}
 </script>

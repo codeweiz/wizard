@@ -1,5 +1,6 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import urls from "@/http/urls";
+import {getCookie} from "@/utils/cookie";
 
 const config = (): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -19,12 +20,13 @@ const config = (): Promise<any> => {
  * @param url 路径
  * @return Promise
  * */
-export const get = (url: string): Promise<any> => {
+export const getPromise = (url: string): Promise<any> => {
     return new Promise((resolve, reject) => {
         config().then((resp) => {
             axios.get(resp.develop.baseUrl + url, {
-                // 是否可以携带 cookie
-                withCredentials: true
+                headers: {
+                    'Authorization': getCookie('Authorization')
+                }
             })
                 .then((res: AxiosResponse) => {
                     if (res.status === 200) {
@@ -38,16 +40,20 @@ export const get = (url: string): Promise<any> => {
 
 
 /**
- * getWithHeaders 方法
+ * Post 方法
  *
  * @param url 路径
- * @param param 参数
+ * @param data 数据
  * @return Promise
  * */
-export const getWithHeaders = (url: string, param: AxiosRequestConfig): Promise<any> => {
+export const postPromise = (url: string, data: any): Promise<any> => {
     return new Promise((resolve, reject) => {
         config().then((resp) => {
-            axios.get(resp.develop.baseUrl + url, param)
+            axios.post(resp.develop.baseUrl + url, data, {
+                headers: {
+                    'Authorization': getCookie('Authorization')
+                }
+            })
                 .then((res: AxiosResponse) => {
                     if (res.status === 200) {
                         resolve(res.data);
@@ -59,18 +65,43 @@ export const getWithHeaders = (url: string, param: AxiosRequestConfig): Promise<
 }
 
 /**
- * Post 方法
+ * PUT 方法
  *
  * @param url 路径
  * @param data 数据
  * @return Promise
  * */
-export const post = (url: string, data: any): Promise<any> => {
+export const putPromise = (url: string, data: any): Promise<any> => {
     return new Promise((resolve, reject) => {
         config().then((resp) => {
-            axios.post(resp.develop.baseUrl + url, data)
+            axios.put(resp.develop.baseUrl + url, data, {
+                headers: {
+                    'Authorization': getCookie('Authorization')
+                }
+            })
                 .then((res: AxiosResponse) => resolve(res))
                 .catch((err) => reject(err));
         });
     })
 }
+
+/**
+ * DELETE 方法
+ *
+ * @param url 路径
+ * @return Promise
+ * */
+export const deletePromise = (url: string): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        config().then((resp) => {
+            axios.delete(resp.develop.baseUrl + url, {
+                headers: {
+                    'Authorization': getCookie('Authorization')
+                }
+            })
+                .then((res: AxiosResponse) => resolve(res))
+                .catch((err) => reject(err));
+        });
+    })
+}
+
