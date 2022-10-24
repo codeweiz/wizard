@@ -22,12 +22,15 @@ export const deleteCookie = (cookieKey: any) => {
  */
 export const getCookie = (name: string) => {
     const cookies = document.cookie;
-    const list = cookies.split('; '); // 解析出名/值对列表
+    // 解析出名/值对列表
+    const list = cookies.split('; ');
     for (let i = 0; i < list.length; i++) {
-        const arr = list[i].split('='); // 解析出名和值
+        // 解析出名和值
+        const arr = list[i].split('=');
         if (arr[0] == name) {
+            // 对cookie值解码
             return decodeURIComponent(arr[1]);
-        } // 对cookie值解码
+        }
     }
     return '';
 }

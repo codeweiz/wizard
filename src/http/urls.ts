@@ -6,7 +6,8 @@ const urls = {
     // 登陆相关
     system: {
         user: {
-            login: 'api/auth/auth/login'
+            login: 'api/auth/auth/login',
+            register: 'api/auth/auth/register'
         },
         test: {
             test1: 'api/system/test/test1'

@@ -16,23 +16,31 @@
         </template>
       </el-dropdown>
     </div>
-
-    <div class="loginFormContainer">
+    <div class="registerFormContainer">
       <el-form
-          ref="ruleFormRef"
-          :model="loginModel"
+          ref="registerFormRef"
+          :model="registerFormModel"
           :rules="rules"
           label-width="180px"
-          class="loginForm">
+          status-icon
+          class="registerForm"
+      >
         <el-form-item :label="$t('login.username')" prop="username">
-          <el-input v-model="loginModel.username" autocomplete="off"/>
+          <el-input v-model="registerFormModel.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item :label="$t('login.password')" prop="password">
-          <el-input v-model="loginModel.password" type="password" autocomplete="off"/>
+          <el-input v-model="registerFormModel.password" type="password" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('login.confirmPassword')" prop="confirmPassword">
+          <el-input v-model="registerFormModel.confirmPassword" type="password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="loginForm(ruleFormRef)">{{ $t('login.login') }}</el-button>
-          <el-button @click="toRegister()">{{ $t('login.register') }}</el-button>
+          <el-button type="primary" @click="registerForm(registerFormRef)">
+            {{ $t('login.register') }}
+          </el-button>
+          <el-button @click="toLogin()">
+            {{ $t('login.cancel') }}
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -40,24 +48,26 @@
 </template>
 
 <script lang="ts" setup>
+import {reactive, ref} from "vue";
+import {ElMessage, FormInstance} from "element-plus";
+import {useRouter} from "vue-router";
+import {register} from "@/http/services";
 import {useStore} from "vuex";
 import {useI18n} from "vue-i18n";
-import {login} from "@/http/services";
-import {ElMessage, FormInstance} from "element-plus";
-import {reactive, ref} from "vue";
-import {addCookie} from "@/utils/cookie";
-import {useRouter} from "vue-router";
 
 // 拿到 store 对象
 const store = useStore();
 const locale = useI18n();
 const router = useRouter();
 
-const ruleFormRef = ref<FormInstance>();
+// 注册表单 ref
+const registerFormRef = ref<FormInstance>()
 
-const loginModel = reactive({
+// 注册表单 model reactive
+const registerFormModel = reactive({
   username: '',
-  password: ''
+  password: '',
+  confirmPassword: ''
 })
 
 // 用户名校验器
@@ -76,9 +86,22 @@ const validatePassword = (rule: any, value: nay, callback: any) => {
   callback();
 }
 
+// 确认密码校验器
+const validateConfirmPassword = (rule: any, value: nay, callback: any) => {
+  if (value === '') {
+    callback(new Error(locale.t("loginValidate.confirmPasswordCannotBeBlank")));
+  }
+  if (value !== registerFormModel.password) {
+    callback(new Error(locale.t("loginValidate.confirmPasswordIsNotEqualToPassword")));
+  }
+  callback();
+}
+
+// 约束
 const rules = reactive({
   username: [{required: true, validator: validateUsername, trigger: 'blur'}],
   password: [{required: true, validator: validatePassword, trigger: 'blur'}],
+  confirmPassword: [{required: true, validator: validateConfirmPassword, trigger: 'blur'}],
 })
 
 // 改变语言
@@ -87,42 +110,41 @@ const changeLanguage = (value: string): void => {
   store.commit("CHANGE_LANGUAGE", value);
 }
 
-// 登陆
-const loginForm = (formEl: FormInstance | undefined) => {
+// 注册表单
+const registerForm = (formEl: FormInstance | undefined) => {
   if (!formEl) {
     return;
   }
   formEl.validate((valid) => {
     if (valid) {
-      login(loginModel).then((res) => {
+      register(registerFormModel).then((res) => {
         if (res.success) {
-          addCookie('userInfo', res.data.access_token, res.data.expires_in);
           ElMessage({
-            message: locale.t("login.loginSuccess"),
-            type: 'success',
-          });
-          router.push("/home");
+            message: locale.t("register.registerSuccess"),
+            type: "success"
+          })
+          router.push("/login");
         } else {
           ElMessage({
-            message: locale.t("login.loginError"),
-            type: 'error',
-          });
+            message: locale.t("register.registerError"),
+            type: "error"
+          })
         }
-      }).catch(error => {
+      }).catch((err) => {
         ElMessage({
-          message: locale.t("login.loginError"),
-          type: 'error',
-        });
-      });
+          message: locale.t("register.registerError"),
+          type: "error"
+        })
+      })
     } else {
       return false;
     }
   })
 }
 
-// 挑战登陆页面
-const toRegister = () => {
-  router.push("/register");
+// 跳转登陆页面
+const toLogin = () => {
+  router.push("login");
 }
 
 </script>
@@ -133,12 +155,12 @@ const toRegister = () => {
   justify-content: flex-end;
 }
 
-.loginFormContainer {
+.registerFormContainer {
   display: flex;
   justify-content: center;
 }
 
-.loginForm {
+.registerForm {
   width: 500px;
 }
 

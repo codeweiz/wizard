@@ -25,7 +25,7 @@ export const getPromise = (url: string): Promise<any> => {
         config().then((resp) => {
             axios.get(resp.develop.baseUrl + url, {
                 headers: {
-                    'Authorization': getCookie('Authorization')
+                    'Authorization': getCookie('userInfo')
                 }
             })
                 .then((res: AxiosResponse) => {
@@ -51,7 +51,7 @@ export const postPromise = (url: string, data: any): Promise<any> => {
         config().then((resp) => {
             axios.post(resp.develop.baseUrl + url, data, {
                 headers: {
-                    'Authorization': getCookie('Authorization')
+                    'Authorization': getCookie('userInfo')
                 }
             })
                 .then((res: AxiosResponse) => {
@@ -76,7 +76,7 @@ export const putPromise = (url: string, data: any): Promise<any> => {
         config().then((resp) => {
             axios.put(resp.develop.baseUrl + url, data, {
                 headers: {
-                    'Authorization': getCookie('Authorization')
+                    'Authorization': getCookie('userInfo')
                 }
             })
                 .then((res: AxiosResponse) => resolve(res))
@@ -96,7 +96,7 @@ export const deletePromise = (url: string): Promise<any> => {
         config().then((resp) => {
             axios.delete(resp.develop.baseUrl + url, {
                 headers: {
-                    'Authorization': getCookie('Authorization')
+                    'Authorization': getCookie('userInfo')
                 }
             })
                 .then((res: AxiosResponse) => resolve(res))

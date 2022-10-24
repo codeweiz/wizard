@@ -10,11 +10,23 @@ export default {
         "login": "login",
         "register": "register",
         "username": "username",
-        "password": "password"
+        "password": "password",
+        "confirmPassword": "confirm Password",
+        "confirm": "confirm",
+        "cancel": "cancel",
+        "loginSuccess": "login success",
+        "loginError": "login error"
     },
     // 登陆模块校验
     "loginValidate": {
         "usernameCannotBeBlank": "username cannot be blank",
-        "passwordCannotBeBlank": "password cannot be blank"
+        "passwordCannotBeBlank": "password cannot be blank",
+        "confirmPasswordCannotBeBlank": "confirm password cannot be blank",
+        "confirmPasswordIsNotEqualToPassword": "confirm password is not equal to password",
+    },
+    // 注册模块
+    "register": {
+        "registerSuccess": "register success",
+        "registerError": "register error"
     }
 }

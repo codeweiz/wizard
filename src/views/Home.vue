@@ -1,20 +1,20 @@
 <template>
   <div class="home">
-
+    <div>This is home page!</div>
   </div>
 </template>
 
-<script lang="ts">
-import {Vue} from 'vue-class-component';
-import {readSessionString} from "@/common/storage";
+<script lang="ts" setup>
+import {onMounted} from "vue";
+import {useRouter} from "vue-router";
+import {getCookie} from "@/utils/cookie";
 
-export default class Home extends Vue {
+const router = useRouter();
 
-  created() {
-    if (!readSessionString("userInfo")) {
-      debugger
-      this.$router.push('/login');
-    }
+onMounted(() => {
+  if (getCookie("userInfo") === '') {
+    router.push('/login');
   }
-}
+})
+
 </script>
