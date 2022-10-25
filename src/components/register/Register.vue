@@ -71,7 +71,7 @@ const registerFormModel = reactive({
 })
 
 // 用户名校验器
-const validateUsername = (rule: any, value: nay, callback: any) => {
+const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(locale.t("loginValidate.usernameCannotBeBlank")));
   }
@@ -79,7 +79,7 @@ const validateUsername = (rule: any, value: nay, callback: any) => {
 }
 
 // 密码校验器
-const validatePassword = (rule: any, value: nay, callback: any) => {
+const validatePassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(locale.t("loginValidate.passwordCannotBeBlank")));
   }
@@ -87,7 +87,7 @@ const validatePassword = (rule: any, value: nay, callback: any) => {
 }
 
 // 确认密码校验器
-const validateConfirmPassword = (rule: any, value: nay, callback: any) => {
+const validateConfirmPassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(locale.t("loginValidate.confirmPasswordCannotBeBlank")));
   }

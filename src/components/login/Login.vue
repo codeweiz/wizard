@@ -58,10 +58,10 @@ const ruleFormRef = ref<FormInstance>();
 const loginModel = reactive({
   username: '',
   password: ''
-})
+});
 
 // 用户名校验器
-const validateUsername = (rule: any, value: nay, callback: any) => {
+const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(locale.t("loginValidate.usernameCannotBeBlank")));
   }
@@ -69,7 +69,7 @@ const validateUsername = (rule: any, value: nay, callback: any) => {
 }
 
 // 密码校验器
-const validatePassword = (rule: any, value: nay, callback: any) => {
+const validatePassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(locale.t("loginValidate.passwordCannotBeBlank")));
   }
@@ -101,7 +101,7 @@ const loginForm = (formEl: FormInstance | undefined) => {
             message: locale.t("login.loginSuccess"),
             type: 'success',
           });
-          router.push("/home");
+          router.push("/");
         } else {
           ElMessage({
             message: locale.t("login.loginError"),
