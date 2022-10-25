@@ -6,8 +6,9 @@ const urls = {
     // 登陆相关
     system: {
         user: {
+            register: 'api/auth/auth/register',
             login: 'api/auth/auth/login',
-            register: 'api/auth/auth/register'
+            logout: 'api/auth/auth/logout',
         }
     }
 }

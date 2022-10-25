@@ -28,5 +28,15 @@ export default {
     "register": {
         "registerSuccess": "register success",
         "registerError": "register error"
+    },
+    // 主页模块
+    "home": {
+        // 头像相关
+        "avatar": {
+            "userInfo": "user info",
+            "switchLanguage": "switch language",
+            "logout": "logout",
+            "help": "help"
+        }
     }
 }

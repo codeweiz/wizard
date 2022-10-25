@@ -2,6 +2,22 @@ import urls from "@/http/urls";
 import {postPromise} from "@/http/index";
 
 /**
+ * 注册
+ *
+ * @param registerModel 用户名、密码
+ * @return Promise
+ * */
+export const register = (registerModel: any): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        postPromise(urls.system.user.register, registerModel).then((res) => {
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+}
+
+/**
  * 登陆 login
  *
  * @param loginModel LoginModel
@@ -17,15 +33,15 @@ export const login = (loginModel: any): Promise<any> => {
     })
 }
 
+
 /**
- * 注册
+ * 登出 logout
  *
- * @param registerModel 用户名、密码
- * @return Promise
+ * @return Promise<any>
  * */
-export const register = (registerModel: any): Promise<any> => {
+export const logout = (): Promise<any> => {
     return new Promise((resolve, reject) => {
-        postPromise(urls.system.user.register, registerModel).then((res) => {
+        postPromise(urls.system.user.logout, {}).then((res) => {
             resolve(res);
         }).catch((err) => {
             reject(err);
