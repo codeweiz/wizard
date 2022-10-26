@@ -1,5 +1,3 @@
-import {getCaptchaCode} from "@/http/services";
-
 const urls = {
 
     // config.json 地址
@@ -13,7 +11,10 @@ const urls = {
             captchaCode: 'code',
             logout: 'api/auth/auth/logout',
         }
-    }
+    },
+
+    // ws 相关
+    ws: 'api/websocket/ws'
 }
 
 export default urls;

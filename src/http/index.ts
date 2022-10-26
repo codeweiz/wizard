@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from 'axios';
 import urls from "@/http/urls";
 import {getCookie} from "@/utils/cookie";
 
-const config = (): Promise<any> => {
+export const config = (): Promise<any> => {
     return new Promise((resolve, reject) => {
         axios.get(urls.configJson).then((res: AxiosResponse) => {
             if (res.status === 200) {

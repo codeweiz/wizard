@@ -169,10 +169,14 @@ import {useI18n} from "vue-i18n";
 import {useStore} from "vuex";
 import {deleteCookie, getCookie} from "@/utils/cookie";
 import {logout} from "@/http/services";
+import {getWebSocketUrl} from "@/utils/websocket";
 
 const store = useStore();
 const router = useRouter();
 const locale = useI18n();
+
+// websocket 实例
+let websocket = ref<WebSocket>();
 
 // 消息数量
 let messageCount = ref(0);
@@ -196,9 +200,12 @@ const editableTabs = ref([
 ])
 
 onMounted(() => {
+  // 如果没有 cookie，就跳转到登陆页
   if (getCookie("userInfo") === '') {
     router.push('/login');
+    return;
   }
+  createWebSocket();
 })
 
 const handleSelect = (key: string, keyPath: string[]) => {
@@ -275,6 +282,13 @@ const clickAvatarItem = (command: string | number | object) => {
       ElMessage.success(command.toString());
       return;
   }
+}
+
+// 创建 websocket
+const createWebSocket = () => {
+  getWebSocketUrl().then(res => {
+    websocket = new WebSocket(res);
+  })
 }
 
 </script>
