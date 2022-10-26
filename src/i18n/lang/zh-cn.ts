@@ -11,6 +11,7 @@ export default {
         "register": "注册",
         "username": "用户名",
         "password": "密码",
+        "captchaCode": "验证码",
         "confirmPassword": "确认密码",
         "confirm": "确定",
         "cancel": "取消",
@@ -23,6 +24,7 @@ export default {
         "passwordCannotBeBlank": "密码不能为空",
         "confirmPasswordCannotBeBlank": "确认密码不能为空",
         "confirmPasswordIsNotEqualToPassword": "确认密码和密码不一致",
+        "captchaCodeCannotBeBlank": "验证码不能为空"
     },
     // 注册模块
     "register": {

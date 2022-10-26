@@ -2,7 +2,7 @@
  * 添加 cookie
  * @param cookieKey 键
  * @param cookieValue 值
- * @param overSeconds 过期时间
+ * @param overSeconds 过期时间（秒）
  */
 export const addCookie = (cookieKey: any, cookieValue: string, overSeconds?: number) => {
     document.cookie = `${cookieKey}=${cookieValue};max-age=${overSeconds}`;

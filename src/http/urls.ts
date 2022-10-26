@@ -1,3 +1,5 @@
+import {getCaptchaCode} from "@/http/services";
+
 const urls = {
 
     // config.json 地址
@@ -8,6 +10,7 @@ const urls = {
         user: {
             register: 'api/auth/auth/register',
             login: 'api/auth/auth/login',
+            captchaCode: 'code',
             logout: 'api/auth/auth/logout',
         }
     }

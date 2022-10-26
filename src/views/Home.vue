@@ -3,6 +3,7 @@
     <!--  左侧导航栏  -->
     <div class="home_nav">
       <el-menu
+          :collapse-transition="false"
           default-active="0"
           :collapse="isCollapse"
           class="el-menu-vertical-demo"

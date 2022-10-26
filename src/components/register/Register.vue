@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="register_container">
     <div class="header">
       <el-dropdown @command="changeLanguage">
         <span class="el-dropdown-link">
@@ -16,33 +16,35 @@
         </template>
       </el-dropdown>
     </div>
-    <div class="registerFormContainer">
-      <el-form
-          ref="registerFormRef"
-          :model="registerFormModel"
-          :rules="rules"
-          label-width="180px"
-          status-icon
-          class="registerForm"
-      >
-        <el-form-item :label="$t('login.username')" prop="username">
-          <el-input v-model="registerFormModel.username" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('login.password')" prop="password">
-          <el-input v-model="registerFormModel.password" type="password" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item :label="$t('login.confirmPassword')" prop="confirmPassword">
-          <el-input v-model="registerFormModel.confirmPassword" type="password" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="registerForm(registerFormRef)">
-            {{ $t('login.register') }}
-          </el-button>
-          <el-button @click="toLogin()">
-            {{ $t('login.cancel') }}
-          </el-button>
-        </el-form-item>
-      </el-form>
+    <div class="register_form_container">
+      <div class="register_form_container_content">
+        <el-form
+            ref="registerFormRef"
+            :model="registerFormModel"
+            :rules="rules"
+            label-width="180px"
+            status-icon
+            class="registerForm"
+        >
+          <el-form-item :label="$t('login.username')" prop="username">
+            <el-input v-model="registerFormModel.username" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('login.password')" prop="password">
+            <el-input v-model="registerFormModel.password" type="password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item :label="$t('login.confirmPassword')" prop="confirmPassword">
+            <el-input v-model="registerFormModel.confirmPassword" type="password" autocomplete="off"></el-input>
+          </el-form-item>
+          <div class="register_btn">
+            <el-button type="primary" @click="registerForm(registerFormRef)">
+              {{ $t('login.register') }}
+            </el-button>
+            <el-button @click="toLogin()">
+              {{ $t('login.cancel') }}
+            </el-button>
+          </div>
+        </el-form>
+      </div>
     </div>
   </div>
 </template>
@@ -150,12 +152,24 @@ const toLogin = () => {
 </script>
 
 <style scoped>
+.register_container {
+  height: 100%;
+}
+
 .header {
   display: flex;
   justify-content: flex-end;
+  height: 16px;
 }
 
-.registerFormContainer {
+.register_form_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 16px);
+}
+
+.register_form_container_content {
   display: flex;
   justify-content: center;
 }
@@ -164,8 +178,9 @@ const toLogin = () => {
   width: 500px;
 }
 
-::v-deep(.el-form-item__content) {
+.register_btn {
   display: flex;
   justify-content: center;
+  margin: 0 0 0 180px;
 }
 </style>

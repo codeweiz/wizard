@@ -1,5 +1,5 @@
 import urls from "@/http/urls";
-import {postPromise} from "@/http/index";
+import {getPromise, postPromise} from "@/http/index";
 
 /**
  * 注册
@@ -26,6 +26,21 @@ export const register = (registerModel: any): Promise<any> => {
 export const login = (loginModel: any): Promise<any> => {
     return new Promise((resolve, reject) => {
         postPromise(urls.system.user.login, loginModel).then((res) => {
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+    })
+}
+
+/**
+ * 获取验证码
+ *
+ * @return Promise<any>
+ * */
+export const getCaptchaCode = (): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        getPromise(urls.system.user.captchaCode).then((res) => {
             resolve(res);
         }).catch((err) => {
             reject(err);
