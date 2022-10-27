@@ -170,11 +170,15 @@ import {useStore} from "vuex";
 import {deleteCookie, getCookie} from "@/utils/cookie";
 import {logout} from "@/http/services";
 import {getWebSocketUrl} from "@/utils/websocket";
+import {delSessionObject, readSessionObject} from "@/utils/storage";
+import constants from "@/common/constants";
 
 const store = useStore();
 const router = useRouter();
 const locale = useI18n();
 
+// userInfo
+const userInfo = ref(null);
 // websocket 实例
 let websocket = ref<WebSocket>();
 
@@ -201,7 +205,7 @@ const editableTabs = ref([
 
 onMounted(() => {
   // 如果没有 cookie，就跳转到登陆页
-  if (getCookie("userInfo") === '') {
+  if (getCookie(constants.cookie.token) === '') {
     router.push('/login');
     return;
   }
@@ -268,7 +272,8 @@ const clickAvatarItem = (command: string | number | object) => {
     case 'logout':
       logout().then((res) => {
         if (res.success) {
-          deleteCookie("userInfo");
+          deleteCookie(constants.cookie.token);
+          delSessionObject(constants.sessionStorage.userInfo);
           router.push("/login");
           ElMessage.success('登出成功');
         } else {
@@ -286,9 +291,40 @@ const clickAvatarItem = (command: string | number | object) => {
 
 // 创建 websocket
 const createWebSocket = () => {
-  getWebSocketUrl().then(res => {
-    websocket = new WebSocket(res);
+  userInfo.value = readSessionObject(constants.sessionStorage.userInfo);
+  getWebSocketUrl(userInfo.value.id).then(res => {
+    const ws = new WebSocket(res);
+    ws.onopen = websocketOpen;
+    ws.onmessage = websocketOnMessage;
+    ws.onclose = websocketOnClose;
+    ws.onerror = websocketOnError;
+    websocket = ws;
   })
+}
+
+// websocket 连接成功
+const websocketOpen = () => {
+  sendWsMessage(JSON.stringify(userInfo.value));
+}
+
+// websocket 连接失败
+const websocketOnError = () => {
+
+}
+
+// websocket 接受信息
+const websocketOnMessage = (data) => {
+  messageCount.value = JSON.parse(data.data).messageCount;
+}
+
+// websocket 关闭
+const websocketOnClose = () => {
+
+}
+
+// websocket 发送信息
+const sendWsMessage = (data) => {
+  websocket.send(data);
 }
 
 </script>

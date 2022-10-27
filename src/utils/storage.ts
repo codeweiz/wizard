@@ -37,6 +37,15 @@ export const readSessionObject = (key: string) => {
 }
 
 /**
+ * 从 sessionStorage 中删除对象
+ *
+ * @param key 键
+ * */
+export const delSessionObject = (key: string) => {
+    sessionStorage.removeItem(key);
+}
+
+/**
  * 往 localStorage 中存放 string
  *
  * @param key 键

@@ -53,6 +53,8 @@ import {ElMessage, FormInstance} from "element-plus";
 import {onMounted, reactive, ref} from "vue";
 import {addCookie} from "@/utils/cookie";
 import {useRouter} from "vue-router";
+import {writeSessionObject} from "@/utils/storage";
+import constants from "@/common/constants";
 
 // store
 const store = useStore();
@@ -139,7 +141,8 @@ const loginForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       login(loginModel).then((res) => {
         if (res.success) {
-          addCookie('userInfo', res.data.access_token, res.data.expires_in * 60);
+          addCookie(constants.cookie.token, res.data.access_token, res.data.expires_in * 60);
+          writeSessionObject(constants.sessionStorage.userInfo, res.data.userInfo);
           ElMessage({
             message: locale.t("login.loginSuccess"),
             type: 'success',

@@ -8,13 +8,13 @@ const urls = {
         user: {
             register: 'api/auth/auth/register',
             login: 'api/auth/auth/login',
-            captchaCode: 'code',
+            captchaCode: 'api/code',
             logout: 'api/auth/auth/logout',
         }
     },
 
     // ws 相关
-    ws: 'api/websocket/ws'
+    ws: 'api/websocket/ws?userId='
 }
 
 export default urls;

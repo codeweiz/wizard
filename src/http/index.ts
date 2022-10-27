@@ -1,6 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 import urls from "@/http/urls";
 import {getCookie} from "@/utils/cookie";
+import constants from "@/common/constants";
 
 export const config = (): Promise<any> => {
     return new Promise((resolve, reject) => {
@@ -25,7 +26,7 @@ export const getPromise = (url: string): Promise<any> => {
         config().then((resp) => {
             axios.get(resp.develop.baseUrl + url, {
                 headers: {
-                    'Authorization': getCookie('userInfo')
+                    'Authorization': getCookie(constants.cookie.token)
                 }
             })
                 .then((res: AxiosResponse) => {
@@ -51,7 +52,7 @@ export const postPromise = (url: string, data: any): Promise<any> => {
         config().then((resp) => {
             axios.post(resp.develop.baseUrl + url, data, {
                 headers: {
-                    'Authorization': getCookie('userInfo')
+                    'Authorization': getCookie(constants.cookie.token)
                 }
             })
                 .then((res: AxiosResponse) => {
@@ -76,7 +77,7 @@ export const putPromise = (url: string, data: any): Promise<any> => {
         config().then((resp) => {
             axios.put(resp.develop.baseUrl + url, data, {
                 headers: {
-                    'Authorization': getCookie('userInfo')
+                    'Authorization': getCookie(constants.cookie.token)
                 }
             })
                 .then((res: AxiosResponse) => resolve(res))
@@ -96,7 +97,7 @@ export const deletePromise = (url: string): Promise<any> => {
         config().then((resp) => {
             axios.delete(resp.develop.baseUrl + url, {
                 headers: {
-                    'Authorization': getCookie('userInfo')
+                    'Authorization': getCookie(constants.cookie.token)
                 }
             })
                 .then((res: AxiosResponse) => resolve(res))
